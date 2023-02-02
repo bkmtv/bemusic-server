@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: mongoose.SchemaTypes.String,
         required: true
+    },
+    isAdmin: {
+        type: mongoose.SchemaTypes.Boolean,
+        default: false
     }
 })
 
