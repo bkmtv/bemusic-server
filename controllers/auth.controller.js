@@ -66,7 +66,7 @@ const register = async (req, res) => {
    })
    await user.save()
 
-   res.json({ message: 'Registered successfully' })
+   res.json({ message: "Registered successfully" })
 };
 
 const user = async (req, res) => {
