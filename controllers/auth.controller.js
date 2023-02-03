@@ -8,20 +8,20 @@ const login = async (req, res) => {
    const { username, password } = req.body
    if (!username || !password) {
       return res.json({
-         message: "Username and password are required",
+         error: "Username and password are required",
       })
    };
    const findUser = await UserSchema.findOne({ username })
    if (!findUser) {
       return res.json({
-         message: "User doesn't exist",
+         error: "User doesn't exist",
       })
    };
    const hashedPassword = findUser.password
    const checkHash = await bcrypt.compare(password, hashedPassword)
    if (!checkHash) {
       return res.json({
-         message: 'Wrong password',
+         error: 'Wrong password',
       })
    };
    const payload = {
@@ -34,6 +34,7 @@ const login = async (req, res) => {
    res.json({
       message: 'Successfully signed in',
       token,
+      username
    });
 };
 
@@ -60,7 +61,7 @@ const register = async (req, res) => {
 };
 
 const user = async (req, res) => {
-    req.user ? res.json(req.user) : res.json({ message: 'Unauthorized' })
+    req.user ? res.json(req.user) : res.json({ error: 'Unauthorized' })
 };
 
 module.exports = {
