@@ -1,20 +1,20 @@
-require('dotenv').config();
 const express = require("express");
-const cors = require("cors");
-
-const PORT = process.env.PORT;
-const MONGO = process.env.MONGO;
-
 const app = express();
+const cors = require("cors");
+require('dotenv').config();
 
-require('./mongo').connect(MONGO);
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
-app.use('/auth', require('./routes/auth'));
-app.use('/user', require('./routes/user'));
+const db = require("./models");
 
-app.listen(PORT, () => {
-    console.log(`API listening on http://localhost:${PORT}`)
+app.use('/auth', require("./routes/auth"));
+app.use('/user', require("./routes/user"));
+
+db.sequelize.sync().then(() => {
+    app.listen(process.env.PORT || 5000, () => {
+        console.log("Server started");
+    });
+}).catch((err) => {
+    console.log(err);
 });

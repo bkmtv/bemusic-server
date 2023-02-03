@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const UserSchema = require("../mongo/schemas/UserSchema.js");
+const { Users } = require("../models");
 
 const SECRET = process.env.SECRET;
 
@@ -11,26 +11,20 @@ const login = async (req, res) => {
          error: "Username and password are required",
       })
    };
-   const findUser = await UserSchema.findOne({ username })
-   if (!findUser) {
+   const user = await Users.findOne({ where: { username: username }});
+   if (!user) {
       return res.json({
          error: "User doesn't exist",
       })
    };
-   const hashedPassword = findUser.password
-   const checkHash = await bcrypt.compare(password, hashedPassword)
+   const checkHash = await bcrypt.compare(password, user.password)
    if (!checkHash) {
       return res.json({
          error: 'Wrong password',
       })
    };
-   const payload = {
-      id: findUser._id,
-      username: findUser.username,
-   };
-   const token = jwt.sign(payload, SECRET, {
-      expiresIn: 1000 * 60 * 60 * 24, // 24 hours
-   });
+   const payload = { id: user.id, username: user.username };
+   const token = jwt.sign(payload, SECRET);
    res.json({
       message: 'Successfully signed in',
       token,
@@ -42,21 +36,21 @@ const register = async (req, res) => {
    const { username, password } = req.body
    if (!username || !password) {
       return res.json({
-         message: 'Username and password are required',
+         error: 'Username and password are required',
       })
    };
-   const userExist = await UserSchema.findOne({ username });
+   const userExist = await Users.findOne({ where: { username: username }});
    if (userExist) {
       return res.json({
-         message: 'Username are taken',
+         error: 'Username are taken',
       })
    };
-   const hashedPassword = await bcrypt.hash(password, 10)
-   const user = new UserSchema({
-      username: username,
-      password: hashedPassword,
+   bcrypt.hash(password, 10).then((hash) => {
+      Users.create({
+         username: username,
+         password: hash,
+      });
    })
-   await user.save()
    res.json({ message: "Registered successfully" })
 };
 
