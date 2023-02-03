@@ -5,7 +5,7 @@ require('dotenv').config();
 
 app.use(express.json());
 app.use(cors(
-    { origin: "https://collections-ibkmt.vercel.app" },
+    { origin: "*" },
 ));
 
 const db = require("./models");
@@ -20,3 +20,5 @@ db.sequelize.sync().then(() => {
 }).catch((err) => {
     console.log(err);
 });
+
+// https://collections-ibkmt.vercel.app
