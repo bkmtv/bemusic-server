@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use('/', require('./routes'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
 
 app.listen(PORT, () => {
     console.log(`API listening on http://localhost:${PORT}`)
