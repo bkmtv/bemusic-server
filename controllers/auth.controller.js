@@ -49,6 +49,7 @@ const register = async (req, res) => {
       Users.create({
          username: username,
          password: hash,
+         regDate: new Date().toLocaleString(),
       });
    })
    res.json({ message: "Registered successfully" })
