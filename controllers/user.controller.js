@@ -14,4 +14,7 @@ const deleteUser = async (req, res) => {
   res.send(users);
 }
 
-module.exports = { getUsers, deleteUser }
+module.exports = { 
+    getUsers,
+    deleteUser,
+   }
