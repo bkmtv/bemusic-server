@@ -11,7 +11,7 @@ app.use(cors(
 const db = require("./models");
 
 app.use("/auth", require("./routes/auth"));
-app.use("/user", require("./routes/user"));
+app.use("/profile", require("./routes/profile"));
 app.use("/collection", require("./routes/collection"));
 
 db.sequelize.sync().then(() => {

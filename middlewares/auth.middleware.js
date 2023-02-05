@@ -1,22 +1,18 @@
-const jwt = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 
-module.exports = (req, res, next) => {
-    const token = req.header("token")
-    if(!token) {
-        return res.json({ error: "No token"})
-    }
+const validateToken = (req, res, next) => {
+    const token = req.header("token");
+    if (!token) return res.json({error: "Unauthorized User"});
     try {
-        jwt.verify(token, SECRET, (err, decoded) => {
-            if(err) {
-                return res.json({ error: "Invalid token" })
-            } else {
-                req.user = decoded
-                next()
-            }
-        })
+        const validToken = verify(token, SECRET);
+        req.user = validToken;
+        if (validToken) {
+            return next();
+        }
     } catch (error) {
-        console.error("Error with auth middleware")
-        res.json({ error: "Server error" })
+        return res.json({ error: error });
     }
-}
+};
+
+module.exports = { validateToken };
