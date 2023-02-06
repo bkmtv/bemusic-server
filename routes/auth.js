@@ -24,12 +24,12 @@ router.post("/login", async (req, res) => {
           error: 'Wrong password',
        })
     };
-    const payload = { id: user.id, username: user.username };
-    const token = jwt.sign(payload, SECRET);
+    const token = jwt.sign({ id: user.id, username: user.username }, SECRET);
     res.json({
        message: 'Successfully signed in',
-       token,
-       username
+       token: token,
+       username: username,
+       id: user.id
     });
  });
 
