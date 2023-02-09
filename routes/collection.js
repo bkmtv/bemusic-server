@@ -7,6 +7,12 @@ router.get("/", async (req, res) => {
     return res.json(collections);
 });
 
+router.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    const colection = await Collections.findByPk(id);
+    return res.json(colection);
+});
+
 router.get("/byuserId/:id", async (req, res) => {
     const id = req.params.id;
     const userColections = await Collections.findAll({ where: { UserId: id }});
