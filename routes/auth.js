@@ -57,7 +57,9 @@ router.post("/register", async (req, res) => {
  });
 
 router.get("/user", validateToken, async (req, res) => {
-    res.json(req.user);
+   const username = req.user.username;
+   const currentUser = await Users.findOne({ where: { username: username }});
+   res.json(currentUser);
 });
 
 module.exports = router;
