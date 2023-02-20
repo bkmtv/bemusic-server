@@ -14,6 +14,8 @@ app.use("/auth", require("./routes/auth"));
 app.use("/profile", require("./routes/profile"));
 app.use("/collection", require("./routes/collection"));
 app.use("/item", require("./routes/item"));
+app.use("/comment", require("./routes/comment"));
+app.use("/like", require("./routes/like"));
 
 db.sequelize.sync().then(() => {
     app.listen(process.env.PORT || 5000, () => {

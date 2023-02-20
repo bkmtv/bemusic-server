@@ -18,10 +18,17 @@ router.get("/:collectionId", async (req, res) => {
     return res.json(collectionItems);
 });
 
-router.post("/", async (req, res) => {
+router.post("/:collectionId", async (req, res) => {
     const item = req.body;
+    item.CollectionId = req.params.collectionId;
     await Items.create(item);
     res.json(item);
 });
+
+router.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    await Items.destroy({ where: { id: id } });
+    res.json("Comment deleted");
+  });
 
 module.exports = router;

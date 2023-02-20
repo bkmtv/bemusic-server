@@ -18,9 +18,7 @@ router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await Users.findByPk(id);
     await Users.destroy({ where: { id: id } });
-    user.save();
-    const users = await Users.findAll();
-    res.send(users);
+    res.json("User deleted");
   });
 
 module.exports = router;

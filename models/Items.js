@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         Items.hasMany(models.Tags, {
             onDelete: "cascade",
         });
+        Items.hasMany(models.Comments, {
+            onDelete: "cascade",
+        });
+        Items.hasMany(models.Likes, {
+            onDelete: "cascade",
+        });
     };
 
     return Items;
