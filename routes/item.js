@@ -2,7 +2,10 @@ const router = require("express").Router();
 const { Items, Likes } = require("../models");
 
 router.get("/", async (req, res) => {
-  const items = await Items.findAll();
+  const items = await Items.findAll({
+    limit: 5,
+    order: [["createdAt", "DESC"]],
+  });
   return res.json(items);
 });
 
