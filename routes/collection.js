@@ -23,6 +23,7 @@ router.get("/byitemCount/largest", async (req, res) => {
         ],
       ],
     },
+    limit: 5,
     order: [["itemCount", "DESC"]],
   });
   return res.json(collections);
