@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Collections, Items } = require("../models");
+const { Collections } = require("../models");
 const { validateToken } = require("../middlewares/auth.middleware.js");
 const { sequelize } = require("../models/index");
 

@@ -9,6 +9,11 @@ router.get("/", async (req, res) => {
   return res.json(items);
 });
 
+router.get("/search", async (req, res) => {
+  const items = await Items.findAll();
+  return res.json(items);
+});
+
 router.get("/byitemId/:id", async (req, res) => {
   const id = req.params.id;
   const item = await Items.findByPk(id, {
