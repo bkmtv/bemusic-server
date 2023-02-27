@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
-  const items = await Items.findAll();
+  const items = await Items.findAll({
+    attributes: ["id", "name"],
+  });
   return res.json(items);
 });
 
