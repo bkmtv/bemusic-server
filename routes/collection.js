@@ -63,4 +63,10 @@ router.post("/", validateToken, async (req, res) => {
   res.json(collection);
 });
 
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  await Collections.destroy({ where: { id: id } });
+  res.json("Collection deleted");
+});
+
 module.exports = router;
