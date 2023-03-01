@@ -63,6 +63,13 @@ router.post("/", validateToken, async (req, res) => {
   res.json(collection);
 });
 
+router.put("/:id/edit", validateToken, async (req, res) => {
+  const collection = req.body;
+  const id = req.params.id;
+  await Collections.update(collection, { where: { id: id } });
+  res.json(collection);
+});
+
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   await Collections.destroy({ where: { id: id } });
