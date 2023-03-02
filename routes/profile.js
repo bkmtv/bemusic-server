@@ -35,14 +35,13 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const user = await Users.findByPk(id);
   await Users.destroy({ where: { id: id } });
   res.json("User deleted");
 });
 
-router.post("/:id/createcollection", validateToken, async (req, res) => {
+router.post("/:userId/createcollection", validateToken, async (req, res) => {
   const collection = req.body;
-  collection.UserId = req.params.id;
+  collection.UserId = req.params.userId;
   await Collections.create(collection);
   res.json(collection);
 });
