@@ -56,13 +56,6 @@ router.get("/byuserId/:id", async (req, res) => {
   return res.json(userColections);
 });
 
-router.post("/", validateToken, async (req, res) => {
-  const collection = req.body;
-  collection.UserId = req.user.id;
-  await Collections.create(collection);
-  res.json(collection);
-});
-
 router.put("/:id/edit", validateToken, async (req, res) => {
   const collection = req.body;
   const id = req.params.id;
