@@ -4,9 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 app.use(express.json());
-app.use(cors(
-    { origin: "*" },
-));
+app.use(cors({ origin: "https://collections-ibkmt.vercel.app" }));
 
 const db = require("./models");
 
@@ -17,12 +15,15 @@ app.use("/item", require("./routes/item"));
 app.use("/comment", require("./routes/comment"));
 app.use("/like", require("./routes/like"));
 
-db.sequelize.sync().then(() => {
+db.sequelize
+  .sync()
+  .then(() => {
     app.listen(process.env.PORT || 5000, () => {
-        console.log("Server is OK");
+      console.log("Server is OK");
     });
-}).catch((err) => {
+  })
+  .catch((err) => {
     console.log(err);
-});
+  });
 
 // origin: https://collections-ibkmt.vercel.app
