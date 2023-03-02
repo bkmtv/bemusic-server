@@ -43,6 +43,13 @@ router.post("/:collectionId", async (req, res) => {
   res.json(item);
 });
 
+router.put("/:id/edit", async (req, res) => {
+  const item = req.body;
+  const id = req.params.id;
+  await Items.update(item, { where: { id: id } });
+  res.json(item);
+});
+
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   await Items.destroy({ where: { id: id } });
