@@ -50,9 +50,9 @@ router.put("/:id/edit", async (req, res) => {
   res.json(item);
 });
 
-router.delete("/:id", async (req, res) => {
-  const id = req.params.id;
-  await Items.destroy({ where: { id: id } });
+router.delete("/:commentId", async (req, res) => {
+  const commentId = req.params.commentId;
+  await Items.destroy({ where: { id: commentId } });
   res.json("Comment deleted");
 });
 
